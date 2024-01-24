@@ -1,17 +1,25 @@
-let addToDoButton = document.getElementById('addList');
-let toDoContainer = document.getElementById('toDoContainer');
-let inputField = document.getElementById('inputField');
+const taskInput = document.getElementById('task-input');
+const addBtn = document.getElementById('add-btn');
+const taskList = document.getElementById('task-list');
 
-addToDoButton.addEventListener('click', function(){
-    let paragraph = document.createElement('p');
-    paragraph.classList.add('paragraph-styling')
-    paragraph.innerText = inputField.value;
-    toDoContainer.appendChild(paragraph);
-    inputField.value = '';
-    paragraph.addEventListener('click', function(){
-        paragraph.style.textDecoration = 'line-through';
-    })
-    paragraph.addEventListener('dblclick', function(){
-        toDoContainer.removeChild(paragraph);
-    })
-})
+//EventListener
+
+addBtn.addEventListener('click', () => {
+    if(taskInput.value !== ""){
+        const taskText = taskInput.value;
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+                                ${taskText}
+                                <button class="delete-btn">Delete</button>
+                                `;
+        taskList.appendChild(listItem);
+        taskInput.value = "";
+    }
+});
+
+taskList.addEventListener('click', (event) => {
+    if(event.target.classList.contains('delete-btn')){
+        const listItem = event.target.parentElement;
+        taskList.removeChild(listItem);
+    }
+}) 
